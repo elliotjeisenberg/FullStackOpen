@@ -5,18 +5,21 @@ const Part = ({ part }) =>
     {part.name} {part.exercises}
   </p>
 
-const Content = ({ parts }) => 
+const Content = ({ parts }) => {
+  
+  const total = parts.reduce((accumulator, part) => {
+    return part.exercises + accumulator;
+  },0)
+
+  return (
   <>
-    <Part
-      part={parts[0]} 
-    />
-    <Part
-      part={parts[1]} 
-    />
-    <Part
-      part={parts[2]} 
-    />      
+    {parts.map(part => {
+      return <Part part={part} key={part.id} />
+    })}
+    <h3>Total {total}</h3>
   </>
+  )
+}
 
 const Course = ({course}) => {
     return (
