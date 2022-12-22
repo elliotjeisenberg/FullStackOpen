@@ -16,7 +16,7 @@ const Content = ({ parts }) => {
     {parts.map(part => {
       return <Part part={part} key={part.id} />
     })}
-    <h3>Total {total}</h3>
+    <h3>total of {total} exercises</h3>
   </>
   )
 }
