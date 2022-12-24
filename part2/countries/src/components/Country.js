@@ -1,11 +1,24 @@
 import axios from 'axios'
-const Country = ({country, temp, setTemp, windSpeed, setWindSpeed}) => {
+import {useEffect, useState} from 'react'
+const Country = ({country}) => {
 
-  axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${country.latlng[0]}&longitude=${country.latlng[1]}&current_weather=true`)
+  const [weather, setWeather] = useState('')
+
+  // axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${country.latlng[0]}&longitude=${country.latlng[1]}&current_weather=true`)
+  // .then(response => {
+  //   setTemp(response.data.current_weather.temperature)
+  //   setWindSpeed(response.data.current_weather.windspeed)
+  // })
+
+  useEffect(() => {
+    axios.get(`https://api.open-meteo.com/v1/forecast?latitude=${country.latlng[0]}&longitude=${country.latlng[1]}&current_weather=true`)
   .then(response => {
-    setTemp(response.data.current_weather.temperature)
-    setWindSpeed(response.data.current_weather.windspeed)
-  })
+    setWeather(response.data.current_weather)
+    })
+  },[])
+
+
+
 
     return (
         <div>
@@ -19,8 +32,8 @@ const Country = ({country, temp, setTemp, windSpeed, setWindSpeed}) => {
             })}
           </ul>
           <img src={country.flags.png} />
-          <p>temperature {temp} celcius</p>
-          <p>wind speed {windSpeed}</p>
+          <p>temperature {weather.temperature} celcius</p>
+          <p>wind speed {weather.windspeed}</p>
         </div>
     )
 }

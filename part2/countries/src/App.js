@@ -7,8 +7,6 @@ function App() {
   const [countrySearch, setCountrySearch] = useState('')
   const [countries, setCountries] = useState([])
   const [currCountries, setCurrCountries] = useState([])
-  const [temp, setTemp] = useState()
-  const [windSpeed, setWindSpeed] = useState()
 
   useEffect(() => {
     axios.get('https://restcountries.com/v3.1/all')
@@ -27,7 +25,7 @@ function App() {
   return (
     <div>
         find countries <input onChange={handleSearchChange} value={countrySearch}/>
-        <CountryList setCurrCountries={setCurrCountries} countries={currCountries} temp={temp} setTemp={setTemp} windSpeed={windSpeed} setWindSpeed={setWindSpeed}/>
+        <CountryList setCurrCountries={setCurrCountries} countries={currCountries}/>
     </div>
   );
 }
