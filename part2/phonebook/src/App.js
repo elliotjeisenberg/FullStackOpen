@@ -3,12 +3,15 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import phonebookServices from './services/phonebook'
+import Notification from './components/Notification'
+import './index.css'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [notification, setNotification] = useState({message:null, type:null})
 
   useEffect(() => {
     phonebookServices
@@ -42,6 +45,17 @@ const App = () => {
         .updatePerson(search.id, {name:search.name, number:newNumber})
         .then(res => {
           setPersons(persons.map(person => person.id !== search.id ? person : res))
+          setNotification({message:`${search.name} was updated with a new number`, type:'neutral'})
+          setTimeout(() => {
+            setNotification({message:null, type:null})
+          },3000)
+        })
+        .catch (res => {
+          setPersons(persons.filter(person => person.id !== search.id))
+          setNotification({message:`User has already been delted from the server`, type:'error'})
+          setTimeout(() => {
+            setNotification({message:null, type:null})
+          },3000)
         })
         }
     }
@@ -55,6 +69,10 @@ const App = () => {
       .addPerson(newPerson)
       .then(res => {
         setPersons(persons.concat(res))
+        setNotification({message:`${newPerson.name} was added to the phonebook`,type:'neutral'})
+          setTimeout(() => {
+            setNotification({message:null, type:null})
+          },3000)
         setNewName('')
         setNewNumber('')
       })
@@ -63,12 +81,22 @@ const App = () => {
 
   const deleteName = id => {
     const x = persons.find( person => person.id === id )
-    console.log(x)
     if (window.confirm(`Do you really want to delete ${x.name}?`)) {
     phonebookServices
     .deletePerson(id)
     .then(res => {
       setPersons(persons.filter(person => person.id !== id))
+      setNotification({message:`${x.name} was deleted from the phonebook`,type:'neutral'})
+          setTimeout(() => {
+            setNotification({message:null, type:null})
+          },3000)
+    })
+    .catch (res => {
+      setPersons(persons.filter(person => person.id !== id))
+      setNotification({message:`User has already been delted from the server`,type:'error'})
+      setTimeout(() => {
+        setNotification({message:null, type:null})
+      },3000)
     })
   }
   }
@@ -76,6 +104,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification notification={notification}/>
       <Filter handleFilter={handleFilter} filter={filter} text={'filter by name'}/>
       <h3>Add a new</h3>
       <PersonForm 
