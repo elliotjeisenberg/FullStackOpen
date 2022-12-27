@@ -1,0 +1,6 @@
+###
+//Get all notes
+GET http://localhost:3001/api/notes
+###
+//Get specific note
+GET http://localhost:3001/api/notes/1
