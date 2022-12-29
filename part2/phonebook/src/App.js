@@ -59,6 +59,7 @@ const App = () => {
         })
         }
     }
+
     else { 
       const newPerson = {
         name: newName,
