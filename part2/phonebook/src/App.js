@@ -68,9 +68,9 @@ const App = () => {
               }, 3000)
             })
             .catch(res => {
-              if (res.response.data.error.includes('Validation failed')) {
+              if (res.response.data.message.includes('Validation failed')) {
                 setNotification({
-                  message: `Both name and number need to be filled out`,
+                  message: res.response.data.message,
                   type: 'error'
                 })
                 setTimeout(() => {
@@ -116,6 +116,19 @@ const App = () => {
             }, 3000)
             setNewName('')
             setNewNumber('')
+          })
+          .catch(res => {
+            console.log(res)
+            setNotification({
+              message: res.response.data.message,
+              type: 'error'
+            })
+            setTimeout(() => {
+              setNotification({
+                message: null,
+                type: null
+              })
+            }, 3000)
           })
       }
     }
