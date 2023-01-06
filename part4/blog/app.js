@@ -4,9 +4,16 @@ const cors = require('cors')
 const middleware = require('./utils/middleware')
 const mongoose = require('mongoose')
 const blogRouter = require('./controllers/blogs')
+const config = require('./utils/config')
 
-const mongoUrl = 'mongodb://localhost/bloglist'
-mongoose.connect(mongoUrl)
+const mongoUrl = config.MONGODB_URI
+
+mongoose.connect(mongoUrl).then(() => {
+    console.log('Connected to Mongo')
+}).catch( err => {
+    console.log(err)
+}
+)
 
 app.use(cors())
 app.use(express.json())

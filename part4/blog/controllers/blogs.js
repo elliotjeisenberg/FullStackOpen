@@ -15,7 +15,11 @@ blogRouter.post('/', (request, response) => {
     blog
         .save()
         .then(result => {
+            console.log('post request was attempted to be saved')
             response.status(201).json(result)
+        })
+        .catch(err => {
+            console.log(err)
         })
 })
 

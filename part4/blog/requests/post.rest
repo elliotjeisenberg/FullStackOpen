@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+    "author": "Elliot Eisenberg",
+    "title": "Best Jiu Jitsu in Wisconsin",
+    "url": "www.jiujitsuwi.com",
+    "upvotes": 1000 
+}
