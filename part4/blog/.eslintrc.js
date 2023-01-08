@@ -14,10 +14,6 @@ module.exports = {
             'warn',
             4
         ],
-        'linebreak-style': [
-            'error',
-            'unix'
-        ],
         'quotes': [
             'error',
             'single'
