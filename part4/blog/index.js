@@ -1,9 +1,10 @@
-const app = require('./app')
+const app = require('./app') // varsinainen Express-sovellus
 const http = require('http')
+const config = require('./utils/config')
+const logger = require('./utils/logger')
+
 const server = http.createServer(app)
 
-const PORT = 3005
-
-server.listen(PORT, () => {
-    console.log('listening on port ', PORT)
+server.listen(config.PORT, () => {
+  logger.info(`Server running on port ${config.PORT}`)
 })
