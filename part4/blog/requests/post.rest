@@ -5,5 +5,5 @@ Content-Type: application/json
     "author": "Elliot Eisenberg",
     "title": "Best Jiu Jitsu in Wisconsin",
     "url": "www.jiujitsuwi.com",
-    "upvotes": 1000 
+    "likes": 1000 
 }
