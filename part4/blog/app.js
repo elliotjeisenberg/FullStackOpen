@@ -7,7 +7,7 @@ const blogsController = require('./controllers/blogs')
 const config = require('./config/config')
 
 
-mongoose.connect(config.mongoUrl)
+mongoose.connect(config.MONGODB_URI)
 
 app.use(cors())
 app.use(express.json())
