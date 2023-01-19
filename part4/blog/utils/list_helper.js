@@ -18,8 +18,34 @@ const favoriteBlog = (blogs) => {
     }
 };
 
+const mostBlogs = (blogs) => {
+     const blogsPerAuthor = {}
+     blogs.forEach((blog) => {
+        blogsPerAuthor[blog.author] = blogsPerAuthor[blog.author] + 1 || 1
+     })
+     const authorWithMostBlogs = Object.keys(blogsPerAuthor).sort((a,b) => blogsPerAuthor[b] - blogsPerAuthor[a])[0]
+     return {
+        author: authorWithMostBlogs,
+        blogs: blogsPerAuthor[authorWithMostBlogs]
+     }
+};
+
+const mostLikes = (blogs) => {
+     const likesPerAuthor = {}
+     blogs.forEach((blog) => {
+        likesPerAuthor[blog.author] = likesPerAuthor[blog.author] + blog.likes || blog.likes 
+     })
+     const authorWithMostLikes = Object.keys(likesPerAuthor).sort((a,b) => likesPerAuthor[b] - likesPerAuthor[a])[0]
+     return {
+        author: authorWithMostLikes,
+        likes: likesPerAuthor[authorWithMostLikes]
+     }
+};
+
 module.exports = {
     dummy,
     totalLikes,
-    favoriteBlog
+    favoriteBlog,
+    mostBlogs,
+    mostLikes
 }
