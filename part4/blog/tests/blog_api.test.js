@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
+const { update } = require('../build/blog')
 const Blog = require('../build/blog')
 const helper = require('./test_helper')
 
@@ -124,13 +125,30 @@ describe('blog list tests', () => {
         const result = await api
             .delete(`/api/blogs/${blogToDelete._id}`)
             .expect(202)
-        console.log(result)
         
         await api
             .get(`/api/blogs/${result.body.id}`)
             .expect(400)
-        
-           
+    })
+
+
+    test('update by id', async () => {
+        let blogToUpdate = helper.initialBlogs[0]
+        const updates = {
+            title: 'UPDATED TITLE',
+            likes: 9999
+        }
+        const result = await api
+            .put(`/api/blogs/${blogToUpdate._id}`)
+            .send(updates)
+            .expect(200)
+
+        const updatedBlog = result.body
+        blogToUpdate.id = blogToUpdate._id
+        delete blogToUpdate._id
+        delete blogToUpdate.__v
+        blogToUpdate = {...blogToUpdate, title:updates.title, likes:updates.likes}
+        expect(updatedBlog).toEqual(blogToUpdate)
     })
 
 })
