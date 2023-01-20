@@ -28,6 +28,7 @@ describe('blog list tests', () => {
 
     test('can grab a blog by its ID', async () => {
         const savedBlog = helper.initialBlogs[0]
+        console.log(savedBlog._id)
         const result = await api
             .get(`/api/blogs/${savedBlog._id}`)
             .expect(200)
@@ -116,6 +117,20 @@ describe('blog list tests', () => {
           .expect(400)
           .expect('Content-Type', /application\/json/)
           
+    })
+
+    test('delete by id', async () => {
+        const blogToDelete = helper.initialBlogs[0]
+        const result = await api
+            .delete(`/api/blogs/${blogToDelete._id}`)
+            .expect(202)
+        console.log(result)
+        
+        await api
+            .get(`/api/blogs/${result.body.id}`)
+            .expect(400)
+        
+           
     })
 
 })
