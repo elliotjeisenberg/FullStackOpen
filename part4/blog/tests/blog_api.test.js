@@ -90,7 +90,36 @@ describe('blog list tests', () => {
         expect(response.body.likes).toBe(0)
         
     })
+
+    test('if "url" or "title" properties are empty, reject with 400 Bad Request', async () => {
+        const newBlogWithoutURL = {
+            title: "Blog with no URL",
+            author: "Elliot Eisenberg",
+            likes: 10
+          }
+
+        let result = await api
+          .post('/api/blogs')
+          .send(newBlogWithoutURL)
+          .expect(400)
+          .expect('Content-Type', /application\/json/)
+
+        const newBlogWithoutTitle = {
+            url: "http://www.reggie.html",
+            author: "Elliot Eisenberg",
+            likes: 10
+        }
+
+        result = await api
+          .post('/api/blogs')
+          .send(newBlogWithoutTitle)
+          .expect(400)
+          .expect('Content-Type', /application\/json/)
+          
+    })
+
 })
+
 
 afterAll(() => {
     mongoose.connection.close()
