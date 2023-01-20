@@ -26,6 +26,15 @@ describe('blog list tests', () => {
         expect(result.body.length).toBe(helper.initialBlogs.length)
     })
 
+    test('can grab a blog by its ID', async () => {
+        const savedBlog = helper.initialBlogs[0]
+        const result = await api
+            .get(`/api/blogs/${savedBlog._id}`)
+            .expect(200)
+            .expect('Content-Type',/application\/json/)
+        expect(result.body.id).toBe(savedBlog._id)
+    })
+
     test('unique identifier is "id"', async () => {
         const result = await api
             .get('/api/blogs')
@@ -62,6 +71,24 @@ describe('blog list tests', () => {
         const blogs = response.body.map(b => b.title)
         expect(response.body).toHaveLength(helper.initialBlogs.length + 1)
         expect(blogs).toContain('My New Blog Post')
+    })
+
+    test('if "likes" property is missing from post request, it will default to 0', async () => {
+        const newBlog = {
+            title: "Blog with no likes",
+            author: "Elliot Eisenberg",
+            url: "http://www.reggie.html"
+          }
+        
+        const result = await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .expect(201)
+            .expect('Content-Type', /application\/json/)
+
+        const response = await api.get(`/api/blogs/${result.body.id}`)
+        expect(response.body.likes).toBe(0)
+        
     })
 })
 
