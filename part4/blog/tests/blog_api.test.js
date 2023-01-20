@@ -43,6 +43,26 @@ describe('blog list tests', () => {
         const totalUniqueIDs = Object.keys(uniqueIDList).length
         expect(totalUniqueIDs).toBe(helper.initialBlogs.length)
     })
+
+    test('making a blog post request creates a new blog post', async () => {
+        const newBlog = {
+            title: "My New Blog Post",
+            author: "Elliot Eisenberg",
+            url: "http://www.reggie.html",
+            likes: 1,
+          }
+        
+        const result = await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .expect(201)
+            .expect('Content-Type', /application\/json/)
+
+        const response = await api.get('/api/blogs')
+        const blogs = response.body.map(b => b.title)
+        expect(response.body).toHaveLength(helper.initialBlogs.length + 1)
+        expect(blogs).toContain('My New Blog Post')
+    })
 })
 
 afterAll(() => {
