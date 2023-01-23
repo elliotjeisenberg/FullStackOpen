@@ -5,5 +5,17 @@ Content-Type: application/json
     "title": "Elliot's Blog",
     "author": "Elliot Eisenberg",
     "url": "www.myblog.com",
-    "likes": 1000
+    "likes": 1000,
+    "userId": "63cdf3a62146e8b3c6d6f0c1"
+}
+
+###
+
+POST http://localhost:3003/api/users
+Content-Type:  application/json
+
+{
+    "username": "oliboo",
+    "name": "Elliot",
+    "password": "mysecretpassword"
 }

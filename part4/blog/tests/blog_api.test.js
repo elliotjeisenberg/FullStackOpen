@@ -9,8 +9,6 @@ const api = supertest(app)
 
 beforeEach(async () => {
     await Blog.deleteMany({})
-    console.log('Cleared test database')
-
     const blogObjects = helper.initialBlogs
         .map(blog => new Blog(blog))
     const promiseArray = blogObjects.map(blog => blog.save())
@@ -29,7 +27,6 @@ describe('blog list tests', () => {
 
     test('can grab a blog by its ID', async () => {
         const savedBlog = helper.initialBlogs[0]
-        console.log(savedBlog._id)
         const result = await api
             .get(`/api/blogs/${savedBlog._id}`)
             .expect(200)
